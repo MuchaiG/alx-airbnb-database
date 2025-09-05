@@ -22,9 +22,28 @@ CREATE INDEX idx_messages_sender_id ON messages(sender_id);
 CREATE INDEX idx_messages_recipient_id ON messages(recipient_id);
 
 
--- MEASURE PERFORMANCE
--- Before index
-EXPLAIN SELECT * FROM bookings WHERE user_id = 'some-uuid';
+-- Performance Measurement with EXPLAIN ANALYZE
 
--- After index
-EXPLAIN SELECT * FROM bookings WHERE user_id = 'some-uuid';
+-- Check booking lookup by user
+EXPLAIN ANALYZE 
+SELECT * 
+FROM bookings 
+WHERE user_id = 'some-uuid';
+
+-- Check booking lookup by property
+EXPLAIN ANALYZE 
+SELECT * 
+FROM bookings 
+WHERE property_id = 'some-uuid';
+
+-- Check property search by location
+EXPLAIN ANALYZE 
+SELECT * 
+FROM properties 
+WHERE location = 'Nairobi';
+
+-- Check user lookup by email
+EXPLAIN ANALYZE 
+SELECT * 
+FROM users 
+WHERE email = 'sample@example.com';
