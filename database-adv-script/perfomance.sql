@@ -19,7 +19,11 @@ SELECT
 FROM bookings b
 JOIN users u ON b.user_id = u.user_id
 JOIN properties p ON b.property_id = p.property_id
-LEFT JOIN payments pay ON b.booking_id = pay.booking_id;
+LEFT JOIN payments pay ON b.booking_id = pay.booking_id
+WHERE b.status = 'confirmed'
+  AND b.start_date >= '2025-01-01'
+  AND b.end_date <= '2025-12-31';
+
 
 -- Analyze performance of the initial query
 EXPLAIN ANALYZE
@@ -43,10 +47,14 @@ SELECT
 FROM bookings b
 JOIN users u ON b.user_id = u.user_id
 JOIN properties p ON b.property_id = p.property_id
-LEFT JOIN payments pay ON b.booking_id = pay.booking_id;
+LEFT JOIN payments pay ON b.booking_id = pay.booking_id
+WHERE b.status = 'confirmed'
+  AND b.start_date >= '2025-01-01'
+  AND b.end_date <= '2025-12-31';
 
 
--- Optimized query with indexing and reduced columns
+-- Refactored optimized query
+
 SELECT 
     b.booking_id,
     b.start_date,
@@ -61,10 +69,13 @@ SELECT
 FROM bookings b
 JOIN users u ON b.user_id = u.user_id
 JOIN properties p ON b.property_id = p.property_id
-LEFT JOIN payments pay ON b.booking_id = pay.booking_id;
+LEFT JOIN payments pay ON b.booking_id = pay.booking_id
+WHERE b.status = 'confirmed'
+  AND b.start_date >= '2025-01-01'
+  AND b.end_date <= '2025-12-31';
 
 
--- Analyze optimized query
+-- Analyze performance of the optimized query
 EXPLAIN ANALYZE
 SELECT 
     b.booking_id,
@@ -80,4 +91,7 @@ SELECT
 FROM bookings b
 JOIN users u ON b.user_id = u.user_id
 JOIN properties p ON b.property_id = p.property_id
-LEFT JOIN payments pay ON b.booking_id = pay.booking_id;
+LEFT JOIN payments pay ON b.booking_id = pay.booking_id
+WHERE b.status = 'confirmed'
+  AND b.start_date >= '2025-01-01'
+  AND b.end_date <= '2025-12-31';
